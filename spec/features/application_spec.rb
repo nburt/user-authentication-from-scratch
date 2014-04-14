@@ -9,4 +9,13 @@ feature 'Homepage' do
 
     expect(page).to have_content 'Welcome!'
   end
+
+  scenario 'user can register' do
+    visit '/'
+    click_link 'Register'
+    fill_in 'email', :with => 'joe@example.com'
+    fill_in 'password', :with => 'password'
+    click_button 'Register'
+    expect(page).to have_content 'Hello joe@example.com'
+  end
 end

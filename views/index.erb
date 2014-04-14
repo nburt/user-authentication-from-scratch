@@ -1,3 +1,7 @@
-<p>
-  Welcome!
-</p>
+<% if email != nil %>
+  <p>Hello <%= email %></p>
+<% else %>
+  <p>Welcome!</p>
+<% end %>
+
+<a href="/register">Register</a>
