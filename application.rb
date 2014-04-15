@@ -35,15 +35,21 @@ class Application < Sinatra::Application
   end
 
   get '/login' do
-    erb :login, locals: {:email_error_exists => false, :email_error_message => nil}
+    erb :login, locals: {:error_exists => false, :error_message => nil}
   end
 
   post '/login' do
+
     if @users_table[:email => params[:email]] != nil
-      session[:user_id] = @users_table[:email => params[:email]][:id]
-      redirect '/'
+      user_password = BCrypt::Password.new(@users_table[:email => params[:email]][:password])
+      if user_password == params[:password]
+        session[:user_id] = @users_table[:email => params[:email]][:id]
+        redirect '/'
+      else
+        erb :login, locals: {:error_exists => true, :error_message => "Invalid email or password"}
+      end
     else
-      erb :login, locals: {:email_error_exists => true, :email_error_message => "Sorry, I don't have the email you're looking for"}
+      erb :login, locals: {:error_exists => true, :error_message => "Invalid email or password"}
     end
   end
 end

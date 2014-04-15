@@ -39,7 +39,18 @@ feature 'Homepage' do
     fill_in 'email', :with => 'joe-bob-malloy@example.com'
     fill_in 'password', :with => 'password'
     click_button 'Login'
-    expect(page).to have_content "Sorry, I don't have the email you're looking for"
+    expect(page).to have_content 'Invalid email or password'
+  end
+
+  scenario 'a user cannot sign in with an invalid password' do
+    click_link 'Logout'
+    click_link 'Login'
+    fill_in 'email', :with => 'joe@example.com'
+    fill_in 'password', :with => 'password1'
+    click_button 'Login'
+    expect(page).to have_content 'Invalid email or password'
+    visit '/'
+    expect(page).to_not have_content 'Hello joe@example.com'
   end
 end
 
