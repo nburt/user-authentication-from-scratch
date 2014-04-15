@@ -5,6 +5,11 @@
         <td></td>
         <td class="form_header">Login</td>
       </tr>
+      <% if email_error_exists %>
+        <tr class="error_message_row">
+          <td colspan="2" class="error_message_data"><%= email_error_message %></td>
+        </tr>
+      <% end %>
       <tr>
         <td class="text_label"><label for="email">Email</label></td>
         <td><input type="email" name="email"></td>

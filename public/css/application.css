@@ -47,3 +47,12 @@ body {
 .homepage_links {
   margin-left: 5%;
 }
+
+.error_message_data {
+  color: red;
+  font-size: .8em;
+}
+
+.error_message_row {
+  height: 3em;
+}

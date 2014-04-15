@@ -35,11 +35,15 @@ class Application < Sinatra::Application
   end
 
   get '/login' do
-    erb :login
+    erb :login, locals: {:email_error_exists => false, :email_error_message => nil}
   end
 
   post '/login' do
-    session[:user_id] = @users_table[:email => params[:email]][:id]
-    redirect '/'
+    if @users_table[:email => params[:email]] != nil
+      session[:user_id] = @users_table[:email => params[:email]][:id]
+      redirect '/'
+    else
+      erb :login, locals: {:email_error_exists => true, :email_error_message => "Sorry, I don't have the email you're looking for"}
+    end
   end
 end
