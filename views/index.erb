@@ -1,7 +1,8 @@
-<% if email != nil %>
-  <p>Hello <%= email %></p>
-<% else %>
-  <p>Welcome!</p>
-<% end %>
-
-<a href="/register">Register</a>
+<div id="homepage_greeting">
+  <% if email != nil %>
+    <p class="greeting">Hello <%= email %></p>
+  <% else %>
+    <p class="greeting">Welcome!</p>
+  <% end %>
+</div>
+<a class="homepage_links" href="/register">Register</a>

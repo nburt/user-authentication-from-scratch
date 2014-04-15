@@ -1,3 +1,49 @@
 body {
     background-color: orange;
 }
+
+#form_container {
+  width: 80%;
+  margin: auto;
+}
+
+#registration_form {
+  text-align: center;
+  margin-top: 5%;
+}
+
+#registration_form input {
+  margin: .5em 0;
+}
+
+#form_table {
+  margin: auto;
+}
+
+#form_table #button_data {
+  text-align: left;
+}
+
+#form_table .text_label {
+  text-align: left;
+  padding-right: 1em;
+}
+
+#form_header {
+  text-align: left;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+#homepage_greeting {
+  margin-left: 5%;
+}
+
+.greeting {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.homepage_links {
+  margin-left: 5%;
+}

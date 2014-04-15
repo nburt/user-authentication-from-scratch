@@ -8,8 +8,7 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.before(:each) do
-    # Uncomment this once you have your first migration
-    # cleanup_databases
+    cleanup_databases
   end
 end
 

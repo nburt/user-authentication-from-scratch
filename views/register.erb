@@ -1,7 +1,26 @@
-<form action="/register" method="post">
-  <label for="email">Email</label>
-  <input type="email" name="email">
-  <label for="password">Password</label>
-  <input type="password" name="password">
-  <button type="submit">Register</button>
-</form>
+<div id="form_container">
+  <form id="registration_form" action="/register" method="post">
+    <table id="form_table">
+      <tr>
+        <td></td>
+        <td id="form_header">
+          <div>Register</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="text_label"><label for="email">Email</label></td>
+        <td><input type="email" name="email"></td>
+      </tr>
+      <tr>
+        <td class="text_label"><label for="password">Password</label></td>
+        <td><input type="password" name="password"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td id="button_data">
+          <button type="submit">Register</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
