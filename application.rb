@@ -25,13 +25,21 @@ class Application < Sinatra::Application
 
   post '/register' do
     user_password = BCrypt::Password.create(params[:password])
-    id = @users_table.insert(:email => params[:email], :password => user_password)
-    session[:user_id] = id
+    session[:user_id] = @users_table.insert(:email => params[:email], :password => user_password)
     redirect '/'
   end
 
   get '/logout' do
     session.clear
+    redirect '/'
+  end
+
+  get '/login' do
+    erb :login
+  end
+
+  post '/login' do
+    session[:user_id] = @users_table[:email => params[:email]][:id]
     redirect '/'
   end
 end
