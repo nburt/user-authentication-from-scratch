@@ -31,5 +31,5 @@ do not have a Heroku configuration variable named DATABASE_URL, then you will ne
 
 
 ## Links
-Staging: authentication-staging.herokuapp.com
-Production: authentication-production.herokuapp.com
+1. Staging: http://authentication-staging.herokuapp.com
+1. Production: http://authentication-production.herokuapp.com
