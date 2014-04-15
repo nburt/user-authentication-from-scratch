@@ -5,4 +5,9 @@
     <p class="greeting">Welcome!</p>
   <% end %>
 </div>
-<a class="homepage_links" href="/register">Register</a>
+<% if user_id != nil %>
+  <a class="homepage_links" href="/logout">Logout</a>
+<% else %>
+  <a class="homepage_links" href="/register">Register</a>
+<% end %>
+
