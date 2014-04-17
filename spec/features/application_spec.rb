@@ -76,5 +76,14 @@ feature 'Homepage' do
     expect(page).to have_link 'Logout'
   end
 
+  scenario 'User cannot register with an email address that already exists' do
+    click_link 'Logout'
+    click_link 'Register'
+    fill_in 'email', :with => 'abc@abc.com'
+    fill_in 'password', :with => 'pass'
+    click_button 'Register'
+    expect(page).to have_content 'That email address already exists'
+  end
+
 end
 

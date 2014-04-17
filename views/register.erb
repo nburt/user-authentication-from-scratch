@@ -5,6 +5,11 @@
         <td></td>
         <td class="form_header">Register</td>
       </tr>
+      <% if error_message != nil %>
+        <tr class="error_message_row">
+          <td colspan="2" class="error_message_data"><%= error_message %></td>
+        </tr>
+      <% end %>
       <tr>
         <td class="text_label"><label for="email">Email</label></td>
         <td><input type="email" name="email"></td>

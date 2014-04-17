@@ -23,13 +23,17 @@ class Application < Sinatra::Application
   end
 
   get '/register' do
-    erb :register
+    erb :register, :locals => {:error_message => nil}
   end
 
   post '/register' do
-    user_password = BCrypt::Password.create(params[:password])
-    session[:user_id] = @users_table.insert(:email => params[:email], :password => user_password)
-    redirect '/'
+    if @users_table[:email => params[:email]].nil?
+      user_password = BCrypt::Password.create(params[:password])
+      session[:user_id] = @users_table.insert(:email => params[:email], :password => user_password)
+      redirect '/'
+    else
+      erb :register, :locals => {:error_message => "That email address already exists"}
+    end
   end
 
   get '/logout' do
