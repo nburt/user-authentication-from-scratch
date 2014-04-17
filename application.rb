@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'bcrypt'
+require './lib/users_repository'
 
 class Application < Sinatra::Application
 
@@ -8,6 +9,7 @@ class Application < Sinatra::Application
   def initialize(app=nil)
     super(app)
     @users_table = DB[:users]
+    @users_repository = UsersRepository.new
   end
 
   get '/' do
@@ -15,7 +17,8 @@ class Application < Sinatra::Application
       erb :index, locals: {:email => nil, :user_id => nil}
     else
       email = @users_table[:id => session[:user_id]][:email]
-      erb :index, locals: {:email => email, :user_id => session[:user_id]}
+      admin = @users_table[:id => session[:user_id]][:administrator]
+      erb :index, locals: {:email => email, :user_id => session[:user_id], :admin => admin}
     end
   end
 
@@ -39,17 +42,18 @@ class Application < Sinatra::Application
   end
 
   post '/login' do
-
-    if @users_table[:email => params[:email]] != nil
-      user_password = BCrypt::Password.new(@users_table[:email => params[:email]][:password])
-      if user_password == params[:password]
-        session[:user_id] = @users_table[:email => params[:email]][:id]
-        redirect '/'
-      else
-        erb :login, locals: {:error_exists => true, :error_message => "Invalid email or password"}
-      end
+    user_email = @users_table[:email => params[:email]]
+    if user_email.nil? || BCrypt::Password.new(user_email[:password]) != params[:password]
+      erb :login, locals: {:error_message => "Invalid email or password"}
     else
-      erb :login, locals: {:error_exists => true, :error_message => "Invalid email or password"}
+      session[:user_id] = user_email[:id]
+      redirect '/'
     end
+  end
+
+  get '/users' do
+    users = @users_repository.get_users(session[:user_id])
+    admin_email = @users_repository.get_user_email(session[:user_id])
+    erb :users, :locals => {:users => users, :admin_email => admin_email}
   end
 end

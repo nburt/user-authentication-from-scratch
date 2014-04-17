@@ -1,11 +1,15 @@
 require 'spec_helper'
 require 'capybara/rspec'
+require './lib/users_repository'
 
 Capybara.app = Application
 
 feature 'Homepage' do
 
   before do
+    users_table = DB[:users]
+    users_table.delete
+    users_table.insert(:email => 'abc@abc.com', :password => BCrypt::Password.create('pass'), :administrator => true)
     visit '/'
     click_link 'Register'
     fill_in 'email', :with => 'joe@example.com'
@@ -52,5 +56,25 @@ feature 'Homepage' do
     visit '/'
     expect(page).to_not have_content 'Hello joe@example.com'
   end
+
+  scenario 'an admin user can view all of the users' do
+    click_link 'Logout'
+    click_link 'Login'
+    fill_in 'email', :with => 'abc@abc.com'
+    fill_in 'password', :with => 'pass'
+    click_button 'Login'
+    click_link 'View all users'
+    within 'h1' do
+      expect(page).to have_content 'Users'
+    end
+    expect(page).to have_content 'joe@example.com'
+    expect(page).to have_content 'abc@abc.com'
+    expect(page).to have_link 'Home'
+    within 'p' do
+      expect(page).to have_content 'Welcome, abc@abc.com |'
+    end
+    expect(page).to have_link 'Logout'
+  end
+
 end
 

@@ -1,0 +1,23 @@
+<div id="users_header_container">
+  <a id='users_header_home_link' href="/">Home</a>
+  <p id="user_header_admin_info">Welcome, <%= admin_email %> | <a href="/logout">Logout</a></p>
+</div>
+<div id="users_table_container">
+  <h1>Users</h1>
+  <table id="users_table">
+    <% counter = 0 %>
+    <th>ID</th>
+    <th>Email</th>
+    <% users.each do |user| %>
+      <% if counter % 2 == 0 %>
+        <tr id="darker_grey">
+      <% else %>
+        <tr id="light_grey">
+      <% end %>
+      <td><%= user[:id] %></td>
+      <td><%= user[:email] %></td>
+      </tr>
+      <% counter += 1 %>
+    <% end %>
+  </table>
+</div>
